@@ -1,0 +1,9 @@
+[package]
+name = "visual_sort"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+async-recursion = "1.1.1"
+macroquad = { version = "0.4.13", features = ["audio"] }
+rand = "0.8.5"
