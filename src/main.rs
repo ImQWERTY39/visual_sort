@@ -7,7 +7,7 @@ use macroquad::{shapes, window};
 use sort::Sorts;
 
 const WINDOW_WIDTH: f32 = 1500.0;
-const WINDOW_HEIGHT: f32 = 700.0;
+const WINDOW_HEIGHT: f32 = 800.0;
 const BLOCK_WIDTH: f32 = 1.5;
 const NUMBER_OF_BLOCKS: u16 = (WINDOW_WIDTH / BLOCK_WIDTH) as u16;
 const BLOCK_HEIGHT_UNIT: f32 = WINDOW_HEIGHT / (NUMBER_OF_BLOCKS as f32);
@@ -24,7 +24,7 @@ async fn main() {
         draw_array(&vec);
 
         if !sorted && !paused {
-            sort::alg(&mut vec, Sorts::QuickSort).await;
+            sort::alg(&mut vec, Sorts::CocktailShakerSort).await;
             sorted = true;
         }
 
@@ -34,7 +34,8 @@ async fn main() {
             paused = true;
         }
 
-        if paused && (input::is_key_released(KeyCode::Space) || input::is_key_released(KeyCode::P))
+        if (sorted || paused)
+            && (input::is_key_released(KeyCode::Space) || input::is_key_released(KeyCode::P))
         {
             paused = false;
         }

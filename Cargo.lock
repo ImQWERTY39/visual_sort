@@ -21,17 +21,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-recursion"
-version = "1.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3b43422f69d8ff38f95f1b2bb76517c91589a924d1559a0e935d7c8ce0274c11"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "audir-sles"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -453,7 +442,6 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 name = "visual_sort"
 version = "1.0.0"
 dependencies = [
- "async-recursion",
  "macroquad",
  "rand",
 ]

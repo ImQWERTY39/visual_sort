@@ -6,6 +6,7 @@ use rand::Rng;
 
 pub enum Sorts {
     SelectionSort,
+    CocktailShakerSort,
     QuickSort,
 }
 
@@ -17,6 +18,7 @@ pub async fn alg(vec: &mut [u16], alg: Sorts) {
 
     match alg {
         Sorts::SelectionSort => selection_sort(vec).await,
+        Sorts::CocktailShakerSort => cocktailshaker_sort(vec).await,
         Sorts::QuickSort => quicksort(vec).await,
     }
 
@@ -37,9 +39,42 @@ async fn selection_sort(vec: &mut [u16]) {
     }
 }
 
+async fn cocktailshaker_sort(vec: &mut [u16]) {
+    let mut i = 0;
+    let mut j = vec.len();
+    let mut forward = true;
+
+    let mut ptr = 0;
+
+    while i <= j {
+        if forward {
+            while ptr < j - 1 {
+                if vec[ptr] > vec[ptr + 1] {
+                    swap(vec, ptr, ptr + 1).await;
+                }
+
+                ptr += 1;
+            }
+
+            forward = false;
+            j -= 1;
+        } else {
+            while ptr > i {
+                if vec[ptr] < vec[ptr - 1] {
+                    swap(vec, ptr, ptr - 1).await;
+                }
+
+                ptr -= 1;
+            }
+
+            forward = true;
+            i += 1;
+        }
+    }
+}
+
 async fn quicksort(vec: &mut [u16]) {
-    let mut indexes = Vec::new();
-    indexes.push((0, vec.len() - 1));
+    let mut indexes = vec![(0, vec.len() - 1)];
 
     while let Some((start, end)) = indexes.pop() {
         if start >= end {
