@@ -1,4 +1,7 @@
-pub async fn sort(vec: &mut [u16]) {
+use crate::array::Rectangle;
+
+pub async fn sort(vec: &mut [Rectangle]) {
+    let mut count = 0;
     for i in 0..vec.len() {
         let mut smallest_idx = i;
 
@@ -8,6 +11,6 @@ pub async fn sort(vec: &mut [u16]) {
             }
         }
 
-        super::swap(vec, i, smallest_idx).await;
+        super::swap(vec, i, smallest_idx, &mut count).await;
     }
 }

@@ -1,6 +1,9 @@
 use rand::Rng;
 
-pub async fn sort(vec: &mut [u16]) {
+use crate::array::Rectangle;
+
+pub async fn sort(vec: &mut [Rectangle]) {
+    let mut count = 0;
     let mut random = rand::thread_rng();
     let mut indexes = vec![(0, vec.len() - 1)];
 
@@ -10,8 +13,8 @@ pub async fn sort(vec: &mut [u16]) {
         }
 
         let pivot_idx = random.gen_range(start..=end);
-        let pivot = vec[pivot_idx];
-        super::swap(vec, pivot_idx, end).await;
+        let pivot = vec[pivot_idx].clone();
+        super::swap(vec, pivot_idx, end, &mut count).await;
 
         let mut i = start;
         let mut j = end - 1;
@@ -30,11 +33,11 @@ pub async fn sort(vec: &mut [u16]) {
             }
 
             if i < j {
-                super::swap(vec, i, j).await;
+                super::swap(vec, i, j, &mut count).await;
             }
         }
 
-        super::swap(vec, i, end).await;
+        super::swap(vec, i, end, &mut count).await;
 
         indexes.push((i + 1, end));
         indexes.push((start, i.checked_sub(1).unwrap_or(start)));
