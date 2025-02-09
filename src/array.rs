@@ -1,7 +1,6 @@
+use crate::{BLOCK_HEIGHT_UNIT, BLOCK_WIDTH, WINDOW_HEIGHT};
 use macroquad::{color::Color, shapes};
 use rand::seq::SliceRandom;
-
-use crate::{BLOCK_HEIGHT_UNIT, BLOCK_WIDTH, WINDOW_HEIGHT};
 
 #[derive(Clone)]
 pub struct Rectangle {

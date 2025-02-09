@@ -1,21 +1,14 @@
-use std::time::{Duration, Instant};
-
 use crate::{
     array::{self, Rectangle},
     BLOCK_WIDTH, WINDOW_HEIGHT,
 };
 use macroquad::audio;
-use macroquad::color::Color;
+use macroquad::color::BLACK;
 use macroquad::shapes;
 use macroquad::window;
+use std::time::{Duration, Instant};
 
-const BLACK: Color = Color {
-    r: 0.0,
-    g: 0.0,
-    b: 0.0,
-    a: 1.0,
-};
-const THRESHOLD: u8 = 16;
+const THRESHOLD: u8 = 64;
 
 mod cocktail_shaker_sort;
 mod insertion_sort;
@@ -23,15 +16,19 @@ mod mergesort;
 mod quicksort;
 mod radix_sort;
 mod selection_sort;
+mod shell_sort;
 
 #[allow(unused)]
+#[derive(Debug, Default, Clone, Copy)]
 pub enum Sorts {
+    #[default]
     SelectionSort,
     InsertionSort,
     CocktailShakerSort,
     QuickSort,
     MergeSort,
     RadixSort,
+    ShellSort,
 }
 
 pub async fn alg(vec: &mut [Rectangle], alg: Sorts) {
@@ -47,6 +44,7 @@ pub async fn alg(vec: &mut [Rectangle], alg: Sorts) {
         Sorts::QuickSort => quicksort::sort(vec).await,
         Sorts::MergeSort => mergesort::sort(vec).await,
         Sorts::RadixSort => radix_sort::sort(vec).await,
+        Sorts::ShellSort => shell_sort::sort(vec).await,
     }
 
     audio::stop_sound(&end_audio);

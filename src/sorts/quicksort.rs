@@ -1,6 +1,5 @@
-use rand::Rng;
-
 use crate::array::Rectangle;
+use rand::Rng;
 
 pub async fn sort(vec: &mut [Rectangle]) {
     let mut count = 0;
