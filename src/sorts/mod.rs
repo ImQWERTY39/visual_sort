@@ -8,8 +8,9 @@ use macroquad::shapes;
 use macroquad::window;
 use std::time::{Duration, Instant};
 
-const THRESHOLD: u8 = 64;
+const THRESHOLD: u8 = 12;
 
+mod bitonic_sort;
 mod cocktail_shaker_sort;
 mod insertion_sort;
 mod mergesort;
@@ -18,17 +19,18 @@ mod radix_sort;
 mod selection_sort;
 mod shell_sort;
 
-#[allow(unused)]
-#[derive(Debug, Default, Clone, Copy)]
+#[allow(clippy::enum_variant_names)]
+#[derive(Default, Clone, Copy)]
 pub enum Sorts {
-    #[default]
     SelectionSort,
     InsertionSort,
     CocktailShakerSort,
     QuickSort,
     MergeSort,
+    #[default]
     RadixSort,
     ShellSort,
+    BitonicSort,
 }
 
 pub async fn alg(vec: &mut [Rectangle], alg: Sorts) {
@@ -45,6 +47,7 @@ pub async fn alg(vec: &mut [Rectangle], alg: Sorts) {
         Sorts::MergeSort => mergesort::sort(vec).await,
         Sorts::RadixSort => radix_sort::sort(vec).await,
         Sorts::ShellSort => shell_sort::sort(vec).await,
+        Sorts::BitonicSort => bitonic_sort::sort(vec).await,
     }
 
     audio::stop_sound(&end_audio);

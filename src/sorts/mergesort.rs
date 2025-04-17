@@ -62,7 +62,7 @@ async fn merge(
         k += 1;
     }
 
-    for i in start..end {
-        super::set(vec, i, temp[i].clone(), &mut count).await;
+    for (i, rect) in temp.iter().enumerate().take(end).skip(start) {
+        super::set(vec, i, rect.clone(), &mut count).await;
     }
 }

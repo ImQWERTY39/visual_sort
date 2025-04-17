@@ -17,7 +17,7 @@ struct Button {
     ret_value: Sorts,
 }
 
-pub fn change_sort() -> Option<Sorts> {
+pub fn change_sort(alg: &mut Sorts) {
     let buttons = [
         Button {
             x: 10.0,
@@ -96,10 +96,21 @@ pub fn change_sort() -> Option<Sorts> {
             font_size: 15.0,
             ret_value: Sorts::ShellSort,
         },
+        Button {
+            x: 10.0,
+            y: 220.0,
+            width: 100.0,
+            height: 25.0,
+            text: "Bitonic Sort",
+            text_x: 2.7,
+            text_y: 15.0,
+            font_size: 15.0,
+            ret_value: Sorts::BitonicSort,
+        },
     ];
 
     buttons.iter().for_each(draw_button);
-    buttons
+    *alg = buttons
         .iter()
         .filter_map(|btn| {
             if btn.is_clicked() {
@@ -109,6 +120,7 @@ pub fn change_sort() -> Option<Sorts> {
             }
         })
         .next()
+        .unwrap_or(*alg);
 }
 
 fn draw_button(button: &Button) {

@@ -11,31 +11,7 @@ pub struct Rectangle {
 }
 
 pub fn gen_array(size: u32) -> Vec<Rectangle> {
-    let mut x = 0.0;
-
-    (1..=size)
-        .map(|value| {
-            let height = BLOCK_HEIGHT_UNIT * value as f32;
-            let y = WINDOW_HEIGHT - height;
-            let hratio = height / WINDOW_HEIGHT;
-            let colour = Color {
-                r: hratio,
-                g: 0.1,
-                b: 1.0 - hratio,
-                a: 1.0,
-            };
-
-            let rect = Rectangle {
-                value,
-                y,
-                height,
-                colour,
-            };
-
-            x += BLOCK_WIDTH;
-            rect
-        })
-        .collect()
+    (1..=size).map(Rectangle::new).collect()
 }
 
 pub fn shuffle(vec: &mut [Rectangle]) {
@@ -51,6 +27,27 @@ pub fn draw_array(vec: &[Rectangle]) {
     }
 }
 
+impl Rectangle {
+    pub fn new(value: u32) -> Self {
+        let height = BLOCK_HEIGHT_UNIT * value as f32;
+        let y = WINDOW_HEIGHT - height;
+        let hratio = height / WINDOW_HEIGHT;
+        let colour = Color {
+            r: hratio,
+            g: 0.1,
+            b: 1.0 - hratio,
+            a: 1.0,
+        };
+
+        Rectangle {
+            value,
+            y,
+            height,
+            colour,
+        }
+    }
+}
+
 impl PartialEq for Rectangle {
     fn eq(&self, other: &Self) -> bool {
         self.value == other.value
@@ -61,7 +58,7 @@ impl Eq for Rectangle {}
 
 impl PartialOrd for Rectangle {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.value.partial_cmp(&other.value)
+        Some(self.cmp(other))
     }
 }
 
